@@ -1,23 +1,36 @@
-version: 2
-jobs:
-  build:
+version: 2.1
+executors:
+  docker-publisher:
     environment:
       IMAGE_NAME: thenecromancerx/docker-python-serverless
     docker:
       - image: circleci/buildpack-deps:stretch
+jobs:
+  build:
+    executor: docker-publisher
     steps:
       - checkout
       - setup_remote_docker
       - run:
           name: Build Docker image
-          command: docker build -t $IMAGE_NAME:latest .
+          command: |
+            docker build -t $IMAGE_NAME:latest .
+      - run:
+          name: Archive Docker image
+          command: docker save -o image.tar $IMAGE_NAME
+      - persist_to_workspace:
+          root: .
+          paths:
+            - ./image.tar
   publish-latest:
-    environment:
-      IMAGE_NAME: docker-python-serverless
-    docker:
-      - image: circleci/buildpack-deps:stretch
+    executor: docker-publisher
     steps:
+      - attach_workspace:
+          at: /tmp/workspace
       - setup_remote_docker
+      - run:
+          name: Load archived Docker image
+          command: docker load -i /tmp/workspace/image.tar
       - run:
           name: Publish Docker Image to Docker Hub
           command: |
