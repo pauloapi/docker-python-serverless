@@ -15,6 +15,11 @@ RUN apk add --no-cache --update \
     jq \
     docker \
     python3-dev \
+    gcc \
+    musl-dev \
+    libffi-dev \
+    openssl-dev \
+    cargo \
     tzdata && \
     python3 -m ensurepip && \
     rm -r /usr/lib/python*/ensurepip && \
