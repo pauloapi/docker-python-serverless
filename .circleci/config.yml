@@ -26,7 +26,15 @@ jobs:
             for distro in <<parameters.distros>>; do
               for node in <<parameters.node_versions>>; do
                 for python in <<parameters.python_versions>>; do
-                 echo "test: $distro - $node - $python"
+                  if [[ $distro = 'buster' ]]
+                  then
+                    echo "test: $distro - $node - $python - buster here"
+                  elif [[ $distro = 'alpine' ]]
+                  then
+                    echo "test: $distro - $node - $python - alphine here"
+                  else
+                    echo "test: $distro - $node - $python"
+                  fi
                 done
               done
             done
