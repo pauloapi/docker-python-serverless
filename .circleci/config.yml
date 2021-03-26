@@ -24,6 +24,7 @@ jobs:
       - run:
           name: Test Nested Loop
           command: |
+            mkdir images
             for distro in <<parameters.distros>>; do
               if [[ $distro = 'buster' ]]
               then
