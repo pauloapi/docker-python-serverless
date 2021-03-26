@@ -20,24 +20,28 @@ jobs:
     executor: docker-publisher
     steps:
       - checkout
+      - setup_remote_docker
       - run:
           name: Test Nested Loop
           command: |
             for distro in <<parameters.distros>>; do
-              for node in <<parameters.node_versions>>; do
-                for python in <<parameters.python_versions>>; do
-                  if [[ $distro = 'buster' ]]
-                  then
-                    echo "test: $distro - $node - $python - buster here"
-                  elif [[ $distro = 'alpine' ]]
-                  then
-                    echo "test: $distro - $node - $python - alphine here"
-                  else
-                    echo "test: $distro - $node - $python"
-                  fi
-                done
-              done
+              if [[ $distro = 'buster' ]]
+              then
+                docker build -t $IMAGE_NAME:python3.7-nodejs15-buster --build-arg NODE=python3.7-nodejs15 . -f Dockerfile
+                docker save -o images/python3.7-nodejs15-buster.tar $IMAGE_NAME:python3.7-nodejs15-buster
+              elif [[ $distro = 'alpine' ]]
+              then
+                docker build -t $IMAGE_NAME:python3.7-nodejs15-alpine --build-arg NODE=python3.7-nodejs15-alpine . -f alpine.Dockerfile
+                docker save -o images/python3.7-nodejs15-alpine.tar $IMAGE_NAME:python3.7-nodejs15-alpine
+              else
+                docker build -t $IMAGE_NAME:python3.7-nodejs15-$distro --build-arg NODE=python3.7-$distro . -f Dockerfile
+                docker save -o images/python3.7-nodejs15-$distro.tar $IMAGE_NAME:python3.7-nodejs15-$distro
+              fi
             done
+      - persist_to_workspace:
+          root: .
+          paths:
+            - ./images
   build:
     executor: docker-publisher
     steps:
