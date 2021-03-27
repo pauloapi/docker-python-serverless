@@ -25,7 +25,7 @@ docker pull thenecromancerx/docker-python-serverless:latest
 ```
 
 ## Tags
-To use a specific combination of python, node.js and distro see the following table of available image tags.
+To use a specific combination of python, node.js and distro see the following table of available image tags. All tags are updated automatically via [CircleCI](https://circleci.com/gh/Necromancerx/docker-python-serverless).
 
 Tag | Python version | Node.js version | Distro
 --- | --- | --- | ---
