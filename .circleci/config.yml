@@ -43,13 +43,27 @@ jobs:
           name: Publish Docker Image to Docker Hub
           command: |
             echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
-            echo "$IMAGE_NAME:python<< parameters.python_version >>-nodejs<< parameters.node_version >>-<< parameters.distro >>"
+
             docker push $IMAGE_NAME:python<< parameters.python_version >>-nodejs<< parameters.node_version >>-<< parameters.distro >>
-            # if [[ << parameters.distro >> = 'alpine' ]] && [[ << parameters.node_version >> = '15' ]] && [[ << parameters.python_version >> = '3.8' ]]
-            # then
-            #   docker tag $IMAGE_NAME:python<< parameters.python_version >>-nodejs<< parameters.node_version >>-<< parameters.distro >> $IMAGE_NAME:latest
-            #   docker push $IMAGE_NAME:latest
-            # fi
+
+            if [[ << parameters.distro >> = 'alpine' ]] 
+            then
+              docker tag $IMAGE_NAME:python<< parameters.python_version >>-nodejs<< parameters.node_version >>-<< parameters.distro >> $IMAGE_NAME:python<< parameters.python_version >>-nodejs<< parameters.node_version >>
+              docker push $IMAGE_NAME:python<< parameters.python_version >>-nodejs<< parameters.node_version >>
+            fi
+
+            if [[ << parameters.distro >> = 'alpine' ]] && [[ << parameters.node_version >> = '15' ]]
+            then
+              docker tag $IMAGE_NAME:python<< parameters.python_version >>-nodejs<< parameters.node_version >>-<< parameters.distro >> $IMAGE_NAME:python<< parameters.python_version >>-nodejs<< parameters.node_version >>
+              docker push $IMAGE_NAME:python<< parameters.python_version >>
+            fi
+
+            if [[ << parameters.distro >> = 'alpine' ]] && [[ << parameters.node_version >> = '15' ]] && [[ << parameters.python_version >> = '3.8' ]]
+            then
+              docker tag $IMAGE_NAME:python<< parameters.python_version >>-nodejs<< parameters.node_version >>-<< parameters.distro >> $IMAGE_NAME:latest
+              docker push $IMAGE_NAME:latest
+            fi
+
 workflows:
   version: 2
   build-python3.8-nodejs15:
