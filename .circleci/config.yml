@@ -43,34 +43,25 @@ jobs:
           name: Publish Docker Image to Docker Hub
           command: |
             echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
-            docker push $IMAGE_NAME:python${python_version}-nodejs${node_version}-slim
+            docker push $IMAGE_NAME:python${python_version}-nodejs${node_version}-$distro
             if [[ $distro = 'alpine' ]] && [[ $node_version = '15' ]] && [[ $python_version = '3.8' ]]
             then
-              docker tag $IMAGE_NAME:python${python_version}-nodejs${node_version}-slim $IMAGE_NAME:$latest
+              docker tag $IMAGE_NAME:python${python_version}-nodejs${node_version}-$distro $IMAGE_NAME:$latest
               docker push $IMAGE_NAME:latest
             fi
 workflows:
   version: 2
-  build-master:
+  build-latest:
     jobs:
       - build-publish:
-          distro: "alpine"
-          python_version: "3.8"
-          node_version: "15"
           filters:
             branches:
               only: test-nested-loop
       - build-publish:
-          distro: "alpine"
-          python_version: "3.7"
-          node_version: "15"
           filters:
             branches:
               only: test-nested-loop
       - build-publish:
-          distro: "alpine"
-          python_version: "3.6"
-          node_version: "15"
           filters:
             branches:
               only: test-nested-loop
