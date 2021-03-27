@@ -6,7 +6,7 @@ executors:
     docker:
       - image: circleci/buildpack-deps:stretch
 jobs:
-  test-build:
+  test-slim:
     executor: docker-publisher
     parameters:
       distros:
@@ -22,53 +22,19 @@ jobs:
       - checkout
       - setup_remote_docker
       - run:
-          name: Test Nested Loop
+          name: Build Slim Distro
           command: |
             mkdir images
-            for distro in <<parameters.distros>>; do
-              if [[ $distro = 'buster' ]]
-              then
-                docker build -t $IMAGE_NAME:python3.7-nodejs15-buster --build-arg NODE=python3.7-nodejs15 . -f Dockerfile
-                docker save -o images/python3.7-nodejs15-buster.tar $IMAGE_NAME:python3.7-nodejs15-buster
-              elif [[ $distro = 'alpine' ]]
-              then
-                docker build -t $IMAGE_NAME:python3.7-nodejs15-alpine --build-arg NODE=python3.7-nodejs15-alpine . -f alpine.Dockerfile
-                docker save -o images/python3.7-nodejs15-alpine.tar $IMAGE_NAME:python3.7-nodejs15-alpine
-              else
-                docker build -t $IMAGE_NAME:python3.7-nodejs15-$distro --build-arg NODE=python3.7-$distro . -f Dockerfile
-                docker save -o images/python3.7-nodejs15-$distro.tar $IMAGE_NAME:python3.7-nodejs15-$distro
-              fi
+            for python_version in <<parameters.python_versions>>; do
+              docker build -t $IMAGE_NAME:python${python_version}-nodejs15-slim --build-arg NODE=python${python_version}-nodejs15-slim . -f Dockerfile
             done
-      - persist_to_workspace:
-          root: .
-          paths:
-            - ./images
-  test-publish-latest:
-    executor: docker-publisher
-    parameters:
-      distros:
-        default: "slim alpine buster stretch"
-        type: string
-      python_versions:
-        default: "3.6 3.7 3.8"
-        type: string
-      node_versions:
-        default: "10 12 14 15"
-        type: string
-    steps:
-      - attach_workspace:
-          at: /tmp/workspace
-      - setup_remote_docker
-      - run:
-          name: Load all archived Docker image
-          command: ls -1 images/*.tar | xargs --no-run-if-empty -L 1 docker load -i
       - run:
           name: Publish Docker Image to Docker Hub
           command: |
             echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
 
-            for distro in <<parameters.distros>>; do
-              docker push $IMAGE_NAME:python3.7-nodejs15-$distro
+            for python_version in <<parameters.python_versions>>; do
+              docker push $IMAGE_NAME:python${python_version}-nodejs15-slim
             done
   build:
     executor: docker-publisher
@@ -107,8 +73,7 @@ workflows:
   version: 2
   build-master:
     jobs:
-      - test-build
-      - test-publish-latest
+      - test-slim
       - build:
           filters:
             branches:
