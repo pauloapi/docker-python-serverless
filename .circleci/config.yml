@@ -81,3 +81,333 @@ workflows:
           filters:
             branches:
               only: test-nested-loop
+  build-python3.7-nodejs15:
+    jobs:
+      - build-publish:
+          distro: "alpine"
+          python_version: "3.7"
+          node_version: "15"
+          filters:
+            branches:
+              only: test-nested-loop
+      - build-publish:
+          distro: "slim"
+          python_version: "3.7"
+          node_version: "15"
+          filters:
+            branches:
+              only: test-nested-loop
+      - build-publish:
+          distro: "buster"
+          python_version: "3.7"
+          node_version: "15"
+          filters:
+            branches:
+              only: test-nested-loop
+      - build-publish:
+          distro: "stretch"
+          python_version: "3.7"
+          node_version: "15"
+          filters:
+            branches:
+              only: test-nested-loop
+  build-python3.6-nodejs15:
+    jobs:
+      - build-publish:
+          distro: "alpine"
+          python_version: "3.6"
+          node_version: "15"
+          filters:
+            branches:
+              only: test-nested-loop
+      - build-publish:
+          distro: "slim"
+          python_version: "3.6"
+          node_version: "15"
+          filters:
+            branches:
+              only: test-nested-loop
+      - build-publish:
+          distro: "buster"
+          python_version: "3.6"
+          node_version: "15"
+          filters:
+            branches:
+              only: test-nested-loop
+      - build-publish:
+          distro: "stretch"
+          python_version: "3.6"
+          node_version: "15"
+          filters:
+            branches:
+              only: test-nested-loop
+  build-python3.8-nodejs14:
+    jobs:
+      - build-publish:
+          distro: "alpine"
+          python_version: "3.8"
+          node_version: "14"
+          filters:
+            branches:
+              only: test-nested-loop
+      - build-publish:
+          distro: "slim"
+          python_version: "3.8"
+          node_version: "14"
+          filters:
+            branches:
+              only: test-nested-loop
+      - build-publish:
+          distro: "buster"
+          python_version: "3.8"
+          node_version: "14"
+          filters:
+            branches:
+              only: test-nested-loop
+      - build-publish:
+          distro: "stretch"
+          python_version: "3.8"
+          node_version: "14"
+          filters:
+            branches:
+              only: test-nested-loop
+  build-python3.7-nodejs14:
+    jobs:
+      - build-publish:
+          distro: "alpine"
+          python_version: "3.7"
+          node_version: "14"
+          filters:
+            branches:
+              only: test-nested-loop
+      - build-publish:
+          distro: "slim"
+          python_version: "3.7"
+          node_version: "14"
+          filters:
+            branches:
+              only: test-nested-loop
+      - build-publish:
+          distro: "buster"
+          python_version: "3.7"
+          node_version: "14"
+          filters:
+            branches:
+              only: test-nested-loop
+      - build-publish:
+          distro: "stretch"
+          python_version: "3.7"
+          node_version: "14"
+          filters:
+            branches:
+              only: test-nested-loop
+  build-python3.6-nodejs14:
+    jobs:
+      - build-publish:
+          distro: "alpine"
+          python_version: "3.6"
+          node_version: "14"
+          filters:
+            branches:
+              only: test-nested-loop
+      - build-publish:
+          distro: "slim"
+          python_version: "3.6"
+          node_version: "14"
+          filters:
+            branches:
+              only: test-nested-loop
+      - build-publish:
+          distro: "buster"
+          python_version: "3.6"
+          node_version: "14"
+          filters:
+            branches:
+              only: test-nested-loop
+      - build-publish:
+          distro: "stretch"
+          python_version: "3.6"
+          node_version: "14"
+          filters:
+            branches:
+              only: test-nested-loop
+  build-python3.8-nodejs12:
+    jobs:
+      - build-publish:
+          distro: "alpine"
+          python_version: "3.8"
+          node_version: "12"
+          filters:
+            branches:
+              only: test-nested-loop
+      - build-publish:
+          distro: "slim"
+          python_version: "3.8"
+          node_version: "12"
+          filters:
+            branches:
+              only: test-nested-loop
+      - build-publish:
+          distro: "buster"
+          python_version: "3.8"
+          node_version: "12"
+          filters:
+            branches:
+              only: test-nested-loop
+      - build-publish:
+          distro: "stretch"
+          python_version: "3.8"
+          node_version: "12"
+          filters:
+            branches:
+              only: test-nested-loop
+  build-python3.7-nodejs12:
+    jobs:
+      - build-publish:
+          distro: "alpine"
+          python_version: "3.7"
+          node_version: "12"
+          filters:
+            branches:
+              only: test-nested-loop
+      - build-publish:
+          distro: "slim"
+          python_version: "3.7"
+          node_version: "12"
+          filters:
+            branches:
+              only: test-nested-loop
+      - build-publish:
+          distro: "buster"
+          python_version: "3.7"
+          node_version: "12"
+          filters:
+            branches:
+              only: test-nested-loop
+      - build-publish:
+          distro: "stretch"
+          python_version: "3.7"
+          node_version: "12"
+          filters:
+            branches:
+              only: test-nested-loop
+  build-python3.6-nodejs12:
+    jobs:
+      - build-publish:
+          distro: "alpine"
+          python_version: "3.6"
+          node_version: "12"
+          filters:
+            branches:
+              only: test-nested-loop
+      - build-publish:
+          distro: "slim"
+          python_version: "3.6"
+          node_version: "12"
+          filters:
+            branches:
+              only: test-nested-loop
+      - build-publish:
+          distro: "buster"
+          python_version: "3.6"
+          node_version: "12"
+          filters:
+            branches:
+              only: test-nested-loop
+      - build-publish:
+          distro: "stretch"
+          python_version: "3.6"
+          node_version: "12"
+          filters:
+            branches:
+              only: test-nested-loop
+  build-python3.8-nodejs10:
+    jobs:
+      - build-publish:
+          distro: "alpine"
+          python_version: "3.8"
+          node_version: "10"
+          filters:
+            branches:
+              only: test-nested-loop
+      - build-publish:
+          distro: "slim"
+          python_version: "3.8"
+          node_version: "10"
+          filters:
+            branches:
+              only: test-nested-loop
+      - build-publish:
+          distro: "buster"
+          python_version: "3.8"
+          node_version: "10"
+          filters:
+            branches:
+              only: test-nested-loop
+      - build-publish:
+          distro: "stretch"
+          python_version: "3.8"
+          node_version: "10"
+          filters:
+            branches:
+              only: test-nested-loop
+  build-python3.7-nodejs10:
+    jobs:
+      - build-publish:
+          distro: "alpine"
+          python_version: "3.7"
+          node_version: "10"
+          filters:
+            branches:
+              only: test-nested-loop
+      - build-publish:
+          distro: "slim"
+          python_version: "3.7"
+          node_version: "10"
+          filters:
+            branches:
+              only: test-nested-loop
+      - build-publish:
+          distro: "buster"
+          python_version: "3.7"
+          node_version: "10"
+          filters:
+            branches:
+              only: test-nested-loop
+      - build-publish:
+          distro: "stretch"
+          python_version: "3.7"
+          node_version: "10"
+          filters:
+            branches:
+              only: test-nested-loop
+  build-python3.6-nodejs10:
+    jobs:
+      - build-publish:
+          distro: "alpine"
+          python_version: "3.6"
+          node_version: "10"
+          filters:
+            branches:
+              only: test-nested-loop
+      - build-publish:
+          distro: "slim"
+          python_version: "3.6"
+          node_version: "10"
+          filters:
+            branches:
+              only: test-nested-loop
+      - build-publish:
+          distro: "buster"
+          python_version: "3.6"
+          node_version: "10"
+          filters:
+            branches:
+              only: test-nested-loop
+      - build-publish:
+          distro: "stretch"
+          python_version: "3.6"
+          node_version: "10"
+          filters:
+            branches:
+              only: test-nested-loop
