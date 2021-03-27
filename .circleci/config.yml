@@ -13,7 +13,7 @@ jobs:
         default: "alpine"
         description: Docker image distro
         type: enum
-        enum: ["slim", "alpine", "buster", "stretch"]
+        enum: ["alpine", "slim", "buster", "stretch"]
       python_version:
         description: Supported Lambda Python Version
         default: "3.8"
@@ -51,17 +51,33 @@ jobs:
             fi
 workflows:
   version: 2
-  build-latest:
+  build-python3.8-nodejs15:
     jobs:
       - build-publish:
+          distro: "alpine"
+          python_version: "3.8"
+          node_version: "15"
           filters:
             branches:
               only: test-nested-loop
       - build-publish:
+          distro: "slim"
+          python_version: "3.8"
+          node_version: "15"
           filters:
             branches:
               only: test-nested-loop
       - build-publish:
+          distro: "buster"
+          python_version: "3.8"
+          node_version: "15"
+          filters:
+            branches:
+              only: test-nested-loop
+      - build-publish:
+          distro: "stretch"
+          python_version: "3.8"
+          node_version: "15"
           filters:
             branches:
               only: test-nested-loop
