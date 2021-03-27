@@ -5,8 +5,6 @@ executors:
       IMAGE_NAME: thenecromancerx/docker-python-serverless
     docker:
       - image: circleci/buildpack-deps:stretch
-jobs:
-  test:
     parameters:
       distros:
         default: "slim alpine buster stretch"
@@ -17,6 +15,8 @@ jobs:
       node_versions:
         default: "10 12 14 15"
         type: string
+jobs:
+  test-build:
     executor: docker-publisher
     steps:
       - checkout
@@ -43,6 +43,23 @@ jobs:
           root: .
           paths:
             - ./images
+  test-publish-latest:
+    executor: docker-publisher
+    steps:
+      - attach_workspace:
+          at: /tmp/workspace
+      - setup_remote_docker
+      - run:
+          name: Load all archived Docker image
+          command: ls -1 images/*.tar | xargs --no-run-if-empty -L 1 docker load -i
+      - run:
+          name: Publish Docker Image to Docker Hub
+          command: |
+            echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+
+            for distro in <<parameters.distros>>; do
+              docker push $IMAGE_NAME:python3.7-nodejs15-$distro
+            done
   build:
     executor: docker-publisher
     steps:
@@ -58,7 +75,7 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
-            - ./image.tar
+            - ./images
   publish-latest:
     executor: docker-publisher
     steps:
@@ -80,7 +97,8 @@ workflows:
   version: 2
   build-master:
     jobs:
-      - test
+      - test-build
+      - test-publish-latest
       - build:
           filters:
             branches:
