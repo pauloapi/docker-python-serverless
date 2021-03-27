@@ -6,47 +6,423 @@ executors:
     docker:
       - image: circleci/buildpack-deps:stretch
 jobs:
-  build:
+  build-publish:
     executor: docker-publisher
+    parameters:
+      distro:
+        default: "alpine"
+        description: Docker image distro
+        type: enum
+        enum: ["alpine", "slim", "buster", "stretch"]
+      python_version:
+        description: Supported Lambda Python Version
+        default: "3.8"
+        type: enum
+        enum: ["3.6", "3.7", "3.8"]
+      node_version:
+        description: Node Version
+        default: "15"
+        type: enum
+        enum: ["10", "12", "14", "15"]
     steps:
       - checkout
       - setup_remote_docker
       - run:
-          name: Build Docker image
+          name: Build Docker Image
           command: |
-            docker build -t $IMAGE_NAME:latest .
-      - run:
-          name: Archive Docker image
-          command: docker save -o image.tar $IMAGE_NAME
-      - persist_to_workspace:
-          root: .
-          paths:
-            - ./image.tar
-  publish-latest:
-    executor: docker-publisher
-    steps:
-      - attach_workspace:
-          at: /tmp/workspace
-      - setup_remote_docker
-      - run:
-          name: Load archived Docker image
-          command: docker load -i /tmp/workspace/image.tar
+            if [[ << parameters.distro >> = 'buster' ]]
+            then
+              docker build -t $IMAGE_NAME:python<< parameters.python_version >>-nodejs<< parameters.node_version >>-buster --build-arg NODE=python<< parameters.python_version >>-nodejs<< parameters.node_version >> . -f Dockerfile
+            elif [[ << parameters.distro >> = 'alpine' ]]
+            then
+              docker build -t $IMAGE_NAME:python<< parameters.python_version >>-nodejs<< parameters.node_version >>-alpine --build-arg NODE=python<< parameters.python_version >>-nodejs<< parameters.node_version >>-alpine . -f alpine.Dockerfile
+            else
+              docker build -t $IMAGE_NAME:python<< parameters.python_version >>-nodejs<< parameters.node_version >>-<< parameters.distro >> --build-arg NODE=python<< parameters.python_version >>-<< parameters.distro >> . -f Dockerfile
+            fi
       - run:
           name: Publish Docker Image to Docker Hub
           command: |
             echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
-            docker push $IMAGE_NAME:latest
+
+            docker push $IMAGE_NAME:python<< parameters.python_version >>-nodejs<< parameters.node_version >>-<< parameters.distro >>
+
+            if [[ << parameters.distro >> = 'alpine' ]] 
+            then
+              docker tag $IMAGE_NAME:python<< parameters.python_version >>-nodejs<< parameters.node_version >>-<< parameters.distro >> $IMAGE_NAME:python<< parameters.python_version >>-nodejs<< parameters.node_version >>
+              docker push $IMAGE_NAME:python<< parameters.python_version >>-nodejs<< parameters.node_version >>
+            fi
+
+            if [[ << parameters.distro >> = 'alpine' ]] && [[ << parameters.node_version >> = '15' ]]
+            then
+              docker tag $IMAGE_NAME:python<< parameters.python_version >>-nodejs<< parameters.node_version >>-<< parameters.distro >> $IMAGE_NAME:python<< parameters.python_version >>
+              docker push $IMAGE_NAME:python<< parameters.python_version >>
+            fi
+
+            if [[ << parameters.distro >> = 'alpine' ]] && [[ << parameters.node_version >> = '15' ]] && [[ << parameters.python_version >> = '3.8' ]]
+            then
+              docker tag $IMAGE_NAME:python<< parameters.python_version >>-nodejs<< parameters.node_version >>-<< parameters.distro >> $IMAGE_NAME:latest
+              docker push $IMAGE_NAME:latest
+            fi
+
 workflows:
   version: 2
-  build-master:
+  build-python3.8-nodejs15:
     jobs:
-      - build:
+      - build-publish:
+          distro: "alpine"
+          python_version: "3.8"
+          node_version: "15"
           filters:
             branches:
               only: master
-      - publish-latest:
-          requires:
-            - build
+      - build-publish:
+          distro: "slim"
+          python_version: "3.8"
+          node_version: "15"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "buster"
+          python_version: "3.8"
+          node_version: "15"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "stretch"
+          python_version: "3.8"
+          node_version: "15"
+          filters:
+            branches:
+              only: master
+  build-python3.7-nodejs15:
+    jobs:
+      - build-publish:
+          distro: "alpine"
+          python_version: "3.7"
+          node_version: "15"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "slim"
+          python_version: "3.7"
+          node_version: "15"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "buster"
+          python_version: "3.7"
+          node_version: "15"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "stretch"
+          python_version: "3.7"
+          node_version: "15"
+          filters:
+            branches:
+              only: master
+  build-python3.6-nodejs15:
+    jobs:
+      - build-publish:
+          distro: "alpine"
+          python_version: "3.6"
+          node_version: "15"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "slim"
+          python_version: "3.6"
+          node_version: "15"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "buster"
+          python_version: "3.6"
+          node_version: "15"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "stretch"
+          python_version: "3.6"
+          node_version: "15"
+          filters:
+            branches:
+              only: master
+  build-python3.8-nodejs14:
+    jobs:
+      - build-publish:
+          distro: "alpine"
+          python_version: "3.8"
+          node_version: "14"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "slim"
+          python_version: "3.8"
+          node_version: "14"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "buster"
+          python_version: "3.8"
+          node_version: "14"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "stretch"
+          python_version: "3.8"
+          node_version: "14"
+          filters:
+            branches:
+              only: master
+  build-python3.7-nodejs14:
+    jobs:
+      - build-publish:
+          distro: "alpine"
+          python_version: "3.7"
+          node_version: "14"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "slim"
+          python_version: "3.7"
+          node_version: "14"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "buster"
+          python_version: "3.7"
+          node_version: "14"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "stretch"
+          python_version: "3.7"
+          node_version: "14"
+          filters:
+            branches:
+              only: master
+  build-python3.6-nodejs14:
+    jobs:
+      - build-publish:
+          distro: "alpine"
+          python_version: "3.6"
+          node_version: "14"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "slim"
+          python_version: "3.6"
+          node_version: "14"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "buster"
+          python_version: "3.6"
+          node_version: "14"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "stretch"
+          python_version: "3.6"
+          node_version: "14"
+          filters:
+            branches:
+              only: master
+  build-python3.8-nodejs12:
+    jobs:
+      - build-publish:
+          distro: "alpine"
+          python_version: "3.8"
+          node_version: "12"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "slim"
+          python_version: "3.8"
+          node_version: "12"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "buster"
+          python_version: "3.8"
+          node_version: "12"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "stretch"
+          python_version: "3.8"
+          node_version: "12"
+          filters:
+            branches:
+              only: master
+  build-python3.7-nodejs12:
+    jobs:
+      - build-publish:
+          distro: "alpine"
+          python_version: "3.7"
+          node_version: "12"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "slim"
+          python_version: "3.7"
+          node_version: "12"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "buster"
+          python_version: "3.7"
+          node_version: "12"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "stretch"
+          python_version: "3.7"
+          node_version: "12"
+          filters:
+            branches:
+              only: master
+  build-python3.6-nodejs12:
+    jobs:
+      - build-publish:
+          distro: "alpine"
+          python_version: "3.6"
+          node_version: "12"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "slim"
+          python_version: "3.6"
+          node_version: "12"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "buster"
+          python_version: "3.6"
+          node_version: "12"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "stretch"
+          python_version: "3.6"
+          node_version: "12"
+          filters:
+            branches:
+              only: master
+  build-python3.8-nodejs10:
+    jobs:
+      - build-publish:
+          distro: "alpine"
+          python_version: "3.8"
+          node_version: "10"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "slim"
+          python_version: "3.8"
+          node_version: "10"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "buster"
+          python_version: "3.8"
+          node_version: "10"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "stretch"
+          python_version: "3.8"
+          node_version: "10"
+          filters:
+            branches:
+              only: master
+  build-python3.7-nodejs10:
+    jobs:
+      - build-publish:
+          distro: "alpine"
+          python_version: "3.7"
+          node_version: "10"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "slim"
+          python_version: "3.7"
+          node_version: "10"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "buster"
+          python_version: "3.7"
+          node_version: "10"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "stretch"
+          python_version: "3.7"
+          node_version: "10"
+          filters:
+            branches:
+              only: master
+  build-python3.6-nodejs10:
+    jobs:
+      - build-publish:
+          distro: "alpine"
+          python_version: "3.6"
+          node_version: "10"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "slim"
+          python_version: "3.6"
+          node_version: "10"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "buster"
+          python_version: "3.6"
+          node_version: "10"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "stretch"
+          python_version: "3.6"
+          node_version: "10"
           filters:
             branches:
               only: master
