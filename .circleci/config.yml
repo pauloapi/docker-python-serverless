@@ -5,6 +5,9 @@ executors:
       IMAGE_NAME: thenecromancerx/docker-python-serverless
     docker:
       - image: circleci/buildpack-deps:stretch
+jobs:
+  test-build:
+    executor: docker-publisher
     parameters:
       distros:
         default: "slim alpine buster stretch"
@@ -15,9 +18,6 @@ executors:
       node_versions:
         default: "10 12 14 15"
         type: string
-jobs:
-  test-build:
-    executor: docker-publisher
     steps:
       - checkout
       - setup_remote_docker
@@ -45,6 +45,16 @@ jobs:
             - ./images
   test-publish-latest:
     executor: docker-publisher
+    parameters:
+      distros:
+        default: "slim alpine buster stretch"
+        type: string
+      python_versions:
+        default: "3.6 3.7 3.8"
+        type: string
+      node_versions:
+        default: "10 12 14 15"
+        type: string
     steps:
       - attach_workspace:
           at: /tmp/workspace
