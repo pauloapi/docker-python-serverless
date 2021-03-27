@@ -32,22 +32,22 @@ jobs:
           command: |
             if [[ $distro = 'buster' ]]
             then
-              docker build -t $IMAGE_NAME:python${python_version}-nodejs${node_version}-buster --build-arg NODE=python${python_version}-nodejs${node_version} . -f Dockerfile
+              docker build -t $IMAGE_NAME:python${python_version}-nodejs$node_version-buster --build-arg NODE=python${python_version}-nodejs$node_version . -f Dockerfile
             elif [[ $distro = 'alpine' ]]
             then
-              docker build -t $IMAGE_NAME:python${python_version}-nodejs${node_version}-alpine --build-arg NODE=python${python_version}-nodejs${node_version}-alpine . -f alpine.Dockerfile
+              docker build -t $IMAGE_NAME:python${python_version}-nodejs$node_version-alpine --build-arg NODE=python${python_version}-nodejs$node_version-alpine . -f alpine.Dockerfile
             else
-              docker build -t $IMAGE_NAME:python${python_version}-nodejs${node_version}-$distro --build-arg NODE=python${python_version}-$distro . -f Dockerfile
+              docker build -t $IMAGE_NAME:python${python_version}-nodejs$node_version-$distro --build-arg NODE=python${python_version}-$distro . -f Dockerfile
             fi
       - run:
           name: Publish Docker Image to Docker Hub
           command: |
             echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
-            echo "$IMAGE_NAME:python${python_version}-nodejs${node_version}-$distro"
-            docker push $IMAGE_NAME:python${python_version}-nodejs${node_version}-$distro
+            echo "$IMAGE_NAME:python${python_version}-nodejs$node_version-$distro"
+            docker push $IMAGE_NAME:python${python_version}-nodejs$node_version-$distro
             # if [[ $distro = 'alpine' ]] && [[ $node_version = '15' ]] && [[ $python_version = '3.8' ]]
             # then
-            #   docker tag $IMAGE_NAME:python${python_version}-nodejs${node_version}-$distro $IMAGE_NAME:latest
+            #   docker tag $IMAGE_NAME:python${python_version}-nodejs$node_version-$distro $IMAGE_NAME:latest
             #   docker push $IMAGE_NAME:latest
             # fi
 workflows:
