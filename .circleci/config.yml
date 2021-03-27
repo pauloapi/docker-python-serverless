@@ -6,97 +6,71 @@ executors:
     docker:
       - image: circleci/buildpack-deps:stretch
 jobs:
-  test-slim:
+  build-publish:
     executor: docker-publisher
     parameters:
-      distros:
-        default: "slim alpine buster stretch"
-        type: string
-      python_versions:
-        default: "3.6 3.7 3.8"
-        type: string
-      node_versions:
-        default: "10 12 14 15"
-        type: string
+      distro:
+        default: "alpine"
+        description: Docker image distro
+        type: enum
+        enum: ["slim", "alpine", "buster", "stretch"]
+      python_version:
+        description: Supported Lambda Python Version
+        default: "3.8"
+        type: enum
+        enum: ["3.6", "3.7", "3.8"]
+      node_version:
+        description: Node Version
+        default: "15"
+        type: enum
+        enum: ["10", "12", "14", "15"]
     steps:
       - checkout
       - setup_remote_docker
       - run:
-          name: Build Slim Distro
+          name: Build Docker Image
           command: |
-            mkdir images
-            for python_version in <<parameters.python_versions>>; do
-              docker build -t $IMAGE_NAME:python${python_version}-nodejs15-slim --build-arg NODE=python${python_version}-nodejs15-slim . -f Dockerfile
-            done
+            if [[ $distro = 'buster' ]]
+            then
+              docker build -t $IMAGE_NAME:python${python_version}-nodejs${node_version}-buster --build-arg NODE=python${python_version}-nodejs${node_version} . -f Dockerfile
+            elif [[ $distro = 'alpine' ]]
+            then
+              docker build -t $IMAGE_NAME:python${python_version}-nodejs${node_version}-alpine --build-arg NODE=python${python_version}-nodejs${node_version}-alpine . -f alpine.Dockerfile
+            else
+              docker build -t $IMAGE_NAME:python${python_version}-nodejs${node_version}-$distro --build-arg NODE=python${python_version}-$distro . -f Dockerfile
+            fi
       - run:
           name: Publish Docker Image to Docker Hub
           command: |
             echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
-
-            for python_version in <<parameters.python_versions>>; do
-              docker push $IMAGE_NAME:python${python_version}-nodejs15-slim
-            done
-  build:
-    executor: docker-publisher
-    steps:
-      - checkout
-      - setup_remote_docker
-      - run:
-          name: Build Docker image
-          command: |
-            docker build -t $IMAGE_NAME:latest .
-      - run:
-          name: Archive Docker image
-          command: docker save -o image.tar $IMAGE_NAME
-      - persist_to_workspace:
-          root: .
-          paths:
-            - ./images
-  publish-latest:
-    executor: docker-publisher
-    steps:
-      - attach_workspace:
-          at: /tmp/workspace
-      - setup_remote_docker
-      - run:
-          name: Load archived Docker image
-          command: docker load -i /tmp/workspace/image.tar
-      - run:
-          name: Publish Docker Image to Docker Hub
-          command: |
-            echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
-            # IMAGE_TAG=${CIRCLE_TAG/v/''}
-            # docker tag $IMAGE_NAME:latest $IMAGE_NAME:$IMAGE_TAG
-            docker push $IMAGE_NAME:latest
-            # docker push $IMAGE_NAME:$IMAGE_TAG
+            docker push $IMAGE_NAME:python${python_version}-nodejs${node_version}-slim
+            if [[ $distro = 'alpine' ]] && [[ $node_version = '15' ]] && [[ $python_version = '3.8' ]]
+            then
+              docker tag $IMAGE_NAME:python${python_version}-nodejs${node_version}-slim $IMAGE_NAME:$latest
+              docker push $IMAGE_NAME:latest
+            fi
 workflows:
   version: 2
   build-master:
     jobs:
-      - test-slim
-      - build:
+      - build-publish:
+          distro: "alpine"
+          python_version: "3.8"
+          node_version: "15"
           filters:
             branches:
-              only: master
-      - publish-latest:
-          requires:
-            - build
+              only: test-nested-loop
+      - build-publish:
+          distro: "alpine"
+          python_version: "3.7"
+          node_version: "15"
           filters:
             branches:
-              only: master
-  # build-tags:
-  #   jobs:
-  #     - build:
-  #         filters:
-  #           tags:
-  #             only: /^v.*/
-  #           branches:
-  #             ignore: /.*/
-  #     - publish-tag:
-  #         requires:
-  #           - build
-  #         filters:
-  #           tags:
-  #             only: /^v.*/
-  #           branches:
-  #             ignore: /.*/
+              only: test-nested-loop
+      - build-publish:
+          distro: "alpine"
+          python_version: "3.6"
+          node_version: "15"
+          filters:
+            branches:
+              only: test-nested-loop
