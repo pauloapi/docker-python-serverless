@@ -1,7 +1,7 @@
 [![Pulls](https://img.shields.io/docker/pulls/thenecromancerx/docker-python-serverless.svg?style=flat-square)](https://hub.docker.com/r/thenecromancerx/docker-python-serverless)
 [![CircleCI](https://img.shields.io/circleci/project/github/Necromancerx/docker-python-serverless.svg?style=flat-square)](https://circleci.com/gh/Necromancerx/docker-python-serverless)
 
-## Python with Node.js
+## Node, Python w/ Serverless
 The `latest` tag is currently:
 
 - Linux Distro: alpine
