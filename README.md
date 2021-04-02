@@ -1,5 +1,6 @@
 [![Pulls](https://img.shields.io/docker/pulls/thenecromancerx/docker-python-serverless.svg?style=flat-square)](https://hub.docker.com/r/thenecromancerx/docker-python-serverless)
 [![CircleCI](https://img.shields.io/circleci/project/github/Necromancerx/docker-python-serverless.svg?style=flat-square)](https://circleci.com/gh/Necromancerx/docker-python-serverless)
+![GitHub](https://img.shields.io/github/license/Necromancerx/docker-python-serverless?style=flat-square)
 
 ## Node, Python w/ Serverless
 The `latest` tag is currently:
@@ -14,17 +15,51 @@ The `latest` tag is currently:
 - pipenv: latest
 - poetry: latest
 
+
 ### Use as base image
 ```Dockerfile
+# Get from DockerHub
 FROM thenecromancerx/docker-python-serverless:latest
+
+# Or Get from AWS ECR
+FROM public.ecr.aws/j9a2c9m7/docker-python-serverless:latest
 ```
 
-## Pull from Docker Hub
+
+### Get this image
+The recommended way to get this Docker Image is to pull the prebuilt image from the [Docker Hub Registry](https://hub.docker.com/r/thenecromancerx/docker-python-serverless).
+
 ```bash
-docker pull thenecromancerx/docker-python-serverless:latest
+$ docker pull thenecromancerx/docker-python-serverless:latest
 ```
 
-## Tags
+You can also get this on [AWS ECR Public Gallery](https://gallery.ecr.aws/j9a2c9m7/docker-python-serverless).
+
+```bash
+$ docker pull public.ecr.aws/j9a2c9m7/docker-python-serverless:latest
+```
+
+To use a specific version, you can pull a versioned tag. You can view the [list of available versions](https://hub.docker.com/r/thenecromancerx/docker-python-serverless/tags) in the Docker Hub Registry.
+
+```bash
+$ docker pull thenecromancerx/docker-python-serverless:[TAG]
+```
+
+If you wish, you can also build the image yourself.
+
+```bash
+$ docker build -t thenecromancerx/docker-python-serverless 'https://github.com/Necromancerx/docker-python-serverless.git'
+```
+
+### Versions
+Please see [list](#tags) below to view all supported tags.
+Name | Supported Versions | Default Version
+--- | --- | ---
+python | 3.6, 3.6, 3.8 | 3.8
+node | 10, 12, 14, 15 | 15
+Linux Distro | alpine, buster, stretch, slim | alpine
+
+### Tags
 To use a specific combination of python, node.js and distro see the following table of available image tags. All tags are updated automatically via [CircleCI](https://circleci.com/gh/Necromancerx/docker-python-serverless).
 
 Tag | Python version | Node.js version | Distro

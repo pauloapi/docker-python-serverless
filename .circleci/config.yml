@@ -101,15 +101,6 @@ workflows:
           filters:
             branches:
               only: master
-  test-latest:
-    jobs:
-      - build-publish:
-          distro: "alpine"
-          python_version: "3.8"
-          node_version: "15"
-          filters:
-            branches:
-              only: feature/ecr-test
   build-python3.8-nodejs15:
     triggers:
       - schedule:
