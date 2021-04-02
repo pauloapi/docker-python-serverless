@@ -4,7 +4,7 @@ executors:
     environment:
       IMAGE_NAME: thenecromancerx/docker-python-serverless
     docker:
-      - image: circleci/buildpack-deps:stretch
+      - image: cibuilds/aws:latest
 jobs:
   build-publish:
     executor: docker-publisher
