@@ -3,6 +3,7 @@ executors:
   docker-publisher:
     environment:
       IMAGE_NAME: thenecromancerx/docker-python-serverless
+      ECR_IMAGE_NAME: public.ecr.aws/j9a2c9m7/docker-python-serverless
     docker:
       - image: cibuilds/aws:latest
 jobs:
@@ -68,25 +69,25 @@ jobs:
           command: |
             aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/j9a2c9m7
 
-            docker tag $IMAGE_NAME:python<< parameters.python_version >>-nodejs<< parameters.node_version >>-<< parameters.distro >> public.ecr.aws/j9a2c9m7/$IMAGE_NAME:python<< parameters.python_version >>-nodejs<< parameters.node_version >>-<< parameters.distro >>
-            docker push public.ecr.aws/j9a2c9m7/$IMAGE_NAME:python<< parameters.python_version >>-nodejs<< parameters.node_version >>-<< parameters.distro >>
+            docker tag $IMAGE_NAME:python<< parameters.python_version >>-nodejs<< parameters.node_version >>-<< parameters.distro >> $ECR_IMAGE_NAME:python<< parameters.python_version >>-nodejs<< parameters.node_version >>-<< parameters.distro >>
+            docker push $ECR_IMAGE_NAME:python<< parameters.python_version >>-nodejs<< parameters.node_version >>-<< parameters.distro >>
 
             if [[ << parameters.distro >> = 'alpine' ]] 
             then
-              docker tag $IMAGE_NAME:python<< parameters.python_version >>-nodejs<< parameters.node_version >>-<< parameters.distro >> public.ecr.aws/j9a2c9m7/$IMAGE_NAME:python<< parameters.python_version >>-nodejs<< parameters.node_version >>
-              docker push public.ecr.aws/j9a2c9m7/$IMAGE_NAME:python<< parameters.python_version >>-nodejs<< parameters.node_version >>
+              docker tag $IMAGE_NAME:python<< parameters.python_version >>-nodejs<< parameters.node_version >>-<< parameters.distro >> $ECR_IMAGE_NAME:python<< parameters.python_version >>-nodejs<< parameters.node_version >>
+              docker push $ECR_IMAGE_NAME:python<< parameters.python_version >>-nodejs<< parameters.node_version >>
             fi
 
             if [[ << parameters.distro >> = 'alpine' ]] && [[ << parameters.node_version >> = '15' ]]
             then
-              docker tag $IMAGE_NAME:python<< parameters.python_version >>-nodejs<< parameters.node_version >>-<< parameters.distro >> public.ecr.aws/j9a2c9m7/$IMAGE_NAME:python<< parameters.python_version >>
-              docker push public.ecr.aws/j9a2c9m7/$IMAGE_NAME:python<< parameters.python_version >>
+              docker tag $IMAGE_NAME:python<< parameters.python_version >>-nodejs<< parameters.node_version >>-<< parameters.distro >> $ECR_IMAGE_NAME:python<< parameters.python_version >>
+              docker push $ECR_IMAGE_NAME:python<< parameters.python_version >>
             fi
 
             if [[ << parameters.distro >> = 'alpine' ]] && [[ << parameters.node_version >> = '15' ]] && [[ << parameters.python_version >> = '3.8' ]]
             then
-              docker tag $IMAGE_NAME:python<< parameters.python_version >>-nodejs<< parameters.node_version >>-<< parameters.distro >> public.ecr.aws/j9a2c9m7/$IMAGE_NAME:latest
-              docker push public.ecr.aws/j9a2c9m7/$IMAGE_NAME:latest
+              docker tag $IMAGE_NAME:python<< parameters.python_version >>-nodejs<< parameters.node_version >>-<< parameters.distro >> $ECR_IMAGE_NAME:latest
+              docker push $ECR_IMAGE_NAME:latest
             fi
 
 workflows:
