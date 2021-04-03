@@ -55,7 +55,7 @@ $ docker build -t thenecromancerx/docker-python-serverless 'https://github.com/N
 Please see [list](#tags) below to view all supported tags.
 Name | Supported Versions | Default Version
 --- | --- | ---
-python | 3.6, 3.6, 3.8 | 3.8
+python | 3.6, 3.7, 3.8 | 3.8
 node | 10, 12, 14, 15 | 15
 Linux Distro | alpine, buster, stretch, slim | alpine
 
