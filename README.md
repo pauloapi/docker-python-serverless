@@ -20,23 +20,13 @@ The `latest` tag is currently:
 ```Dockerfile
 # Get from DockerHub
 FROM thenecromancerx/docker-python-serverless:latest
-
-# Or Get from AWS ECR
-FROM public.ecr.aws/j9a2c9m7/docker-python-serverless:latest
 ```
-
 
 ### Get this image
 The recommended way to get this Docker Image is to pull the prebuilt image from the [Docker Hub Registry](https://hub.docker.com/r/thenecromancerx/docker-python-serverless).
 
 ```bash
 $ docker pull thenecromancerx/docker-python-serverless:latest
-```
-
-You can also get this on [AWS ECR Public Gallery](https://gallery.ecr.aws/j9a2c9m7/docker-python-serverless).
-
-```bash
-$ docker pull public.ecr.aws/j9a2c9m7/docker-python-serverless:latest
 ```
 
 To use a specific version, you can pull a versioned tag. You can view the [list of available versions](https://hub.docker.com/r/thenecromancerx/docker-python-serverless/tags) in the Docker Hub Registry.
@@ -53,6 +43,7 @@ $ docker build -t thenecromancerx/docker-python-serverless 'https://github.com/N
 
 ### Versions
 Please see [list](#tags) below to view all supported tags.
+
 Name | Supported Versions | Default Version
 --- | --- | ---
 python | 3.6, 3.7, 3.8 | 3.8
