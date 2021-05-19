@@ -32,12 +32,12 @@ jobs:
           command: |
             if [[ << parameters.distro >> = 'buster' ]]
             then
-              docker build -t $IMAGE_NAME:python<< parameters.python_version >>-nodejs<< parameters.node_version >>-buster --build-arg NODE=python<< parameters.python_version >>-nodejs<< parameters.node_version >> . -f Dockerfile
+              docker build -t $IMAGE_NAME:python<< parameters.python_version >>-nodejs<< parameters.node_version >>-buster --build-arg TAG=python<< parameters.python_version >>-nodejs<< parameters.node_version >> . -f Dockerfile
             elif [[ << parameters.distro >> = 'alpine' ]]
             then
-              docker build -t $IMAGE_NAME:python<< parameters.python_version >>-nodejs<< parameters.node_version >>-alpine --build-arg NODE=python<< parameters.python_version >>-nodejs<< parameters.node_version >>-alpine . -f alpine.Dockerfile
+              docker build -t $IMAGE_NAME:python<< parameters.python_version >>-nodejs<< parameters.node_version >>-alpine --build-arg TAG=python<< parameters.python_version >>-nodejs<< parameters.node_version >>-alpine . -f alpine.Dockerfile
             else
-              docker build -t $IMAGE_NAME:python<< parameters.python_version >>-nodejs<< parameters.node_version >>-<< parameters.distro >> --build-arg NODE=python<< parameters.python_version >>-<< parameters.distro >> . -f Dockerfile
+              docker build -t $IMAGE_NAME:python<< parameters.python_version >>-nodejs<< parameters.node_version >>-<< parameters.distro >> --build-arg TAG=python<< parameters.python_version >>-<< parameters.distro >> . -f Dockerfile
             fi
       - run:
           name: Publish Docker Image to Docker Hub
