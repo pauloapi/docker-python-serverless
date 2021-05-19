@@ -95,16 +95,12 @@ Tag | Python version | Node.js version | Distro
 `python3.8-nodejs10-slim` | 3.8 | 10 | slim
 `python3.7-nodejs10-slim` | 3.7 | 10 | slim
 `python3.6-nodejs10-slim` | 3.6 | 10 | slim
-`python3.8-nodejs15-stretch` | 3.8 | 15 | stretch
 `python3.7-nodejs15-stretch` | 3.7 | 15 | stretch
 `python3.6-nodejs15-stretch` | 3.6 | 15 | stretch
-`python3.8-nodejs14-stretch` | 3.8 | 14 | stretch
 `python3.7-nodejs14-stretch` | 3.7 | 14 | stretch
 `python3.6-nodejs14-stretch` | 3.6 | 14 | stretch
-`python3.8-nodejs12-stretch` | 3.8 | 12 | stretch
 `python3.7-nodejs12-stretch` | 3.7 | 12 | stretch
 `python3.6-nodejs12-stretch` | 3.6 | 12 | stretch
-`python3.8-nodejs10-stretch` | 3.8 | 10 | stretch
 `python3.7-nodejs10-stretch` | 3.7 | 10 | stretch
 `python3.6-nodejs10-stretch` | 3.6 | 10 | stretch
 `python3.8-nodejs15-alpine` | 3.8 | 15 | alpine

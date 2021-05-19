@@ -75,36 +75,6 @@ workflows:
           filters:
             branches:
               only: master
-  build-test-tag-on-commit:
-    jobs:
-      - build-publish:
-          distro: "alpine"
-          python_version: "3.6"
-          node_version: "14"
-          filters:
-            branches:
-              only: master
-      - build-publish:
-          distro: "slim"
-          python_version: "3.6"
-          node_version: "14"
-          filters:
-            branches:
-              only: master
-      - build-publish:
-          distro: "buster"
-          python_version: "3.6"
-          node_version: "14"
-          filters:
-            branches:
-              only: master
-      - build-publish:
-          distro: "stretch"
-          python_version: "3.6"
-          node_version: "14"
-          filters:
-            branches:
-              only: master
   build-python3.8-nodejs15:
     triggers:
       - schedule:
@@ -135,13 +105,13 @@ workflows:
           filters:
             branches:
               only: master
-      - build-publish:
-          distro: "stretch"
-          python_version: "3.8"
-          node_version: "15"
-          filters:
-            branches:
-              only: master
+      # - build-publish:
+      #     distro: "stretch"
+      #     python_version: "3.8"
+      #     node_version: "15"
+      #     filters:
+      #       branches:
+      #         only: master
   build-python3.7-nodejs15:
     triggers:
       - schedule:
@@ -246,13 +216,13 @@ workflows:
           filters:
             branches:
               only: master
-      - build-publish:
-          distro: "stretch"
-          python_version: "3.8"
-          node_version: "14"
-          filters:
-            branches:
-              only: master
+      # - build-publish:
+      #     distro: "stretch"
+      #     python_version: "3.8"
+      #     node_version: "14"
+      #     filters:
+      #       branches:
+      #         only: master
   build-python3.7-nodejs14:
     triggers:
       - schedule:
@@ -357,13 +327,13 @@ workflows:
           filters:
             branches:
               only: master
-      - build-publish:
-          distro: "stretch"
-          python_version: "3.8"
-          node_version: "12"
-          filters:
-            branches:
-              only: master
+      # - build-publish:
+      #     distro: "stretch"
+      #     python_version: "3.8"
+      #     node_version: "12"
+      #     filters:
+      #       branches:
+      #         only: master
   build-python3.7-nodejs12:
     triggers:
       - schedule:
@@ -468,13 +438,13 @@ workflows:
           filters:
             branches:
               only: master
-      - build-publish:
-          distro: "stretch"
-          python_version: "3.8"
-          node_version: "10"
-          filters:
-            branches:
-              only: master
+      # - build-publish:
+      #     distro: "stretch"
+      #     python_version: "3.8"
+      #     node_version: "10"
+      #     filters:
+      #       branches:
+      #         only: master
   build-python3.7-nodejs10:
     triggers:
       - schedule:
