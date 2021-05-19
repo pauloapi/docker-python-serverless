@@ -37,7 +37,7 @@ jobs:
             then
               docker build -t $IMAGE_NAME:python<< parameters.python_version >>-nodejs<< parameters.node_version >>-alpine --build-arg TAG=python<< parameters.python_version >>-nodejs<< parameters.node_version >>-alpine . -f alpine.Dockerfile
             else
-              docker build -t $IMAGE_NAME:python<< parameters.python_version >>-nodejs<< parameters.node_version >>-<< parameters.distro >> --build-arg TAG=python<< parameters.python_version >>-<< parameters.distro >> . -f Dockerfile
+              docker build -t $IMAGE_NAME:python<< parameters.python_version >>-nodejs<< parameters.node_version >>-<< parameters.distro >> --build-arg TAG=python<< parameters.python_version >>-nodejs<< parameters.node_version >>-<< parameters.distro >> . -f Dockerfile
             fi
       - run:
           name: Publish Docker Image to Docker Hub
@@ -66,7 +66,23 @@ jobs:
 
 workflows:
   version: 2
+  build-latest-on-commit:
+    jobs:
+      - build-publish:
+          distro: "alpine"
+          python_version: "3.8"
+          node_version: "15"
+          filters:
+            branches:
+              only: master
   build-python3.8-nodejs15:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
     jobs:
       - build-publish:
           distro: "alpine"
@@ -97,6 +113,13 @@ workflows:
             branches:
               only: master
   build-python3.7-nodejs15:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
     jobs:
       - build-publish:
           distro: "alpine"
@@ -127,6 +150,13 @@ workflows:
             branches:
               only: master
   build-python3.6-nodejs15:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
     jobs:
       - build-publish:
           distro: "alpine"
@@ -157,6 +187,13 @@ workflows:
             branches:
               only: master
   build-python3.8-nodejs14:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
     jobs:
       - build-publish:
           distro: "alpine"
@@ -187,6 +224,13 @@ workflows:
             branches:
               only: master
   build-python3.7-nodejs14:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
     jobs:
       - build-publish:
           distro: "alpine"
@@ -217,6 +261,13 @@ workflows:
             branches:
               only: master
   build-python3.6-nodejs14:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
     jobs:
       - build-publish:
           distro: "alpine"
@@ -247,6 +298,13 @@ workflows:
             branches:
               only: master
   build-python3.8-nodejs12:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
     jobs:
       - build-publish:
           distro: "alpine"
@@ -277,6 +335,13 @@ workflows:
             branches:
               only: master
   build-python3.7-nodejs12:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
     jobs:
       - build-publish:
           distro: "alpine"
@@ -307,6 +372,13 @@ workflows:
             branches:
               only: master
   build-python3.6-nodejs12:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
     jobs:
       - build-publish:
           distro: "alpine"
@@ -337,6 +409,13 @@ workflows:
             branches:
               only: master
   build-python3.8-nodejs10:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
     jobs:
       - build-publish:
           distro: "alpine"
@@ -367,6 +446,13 @@ workflows:
             branches:
               only: master
   build-python3.7-nodejs10:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
     jobs:
       - build-publish:
           distro: "alpine"
@@ -397,6 +483,13 @@ workflows:
             branches:
               only: master
   build-python3.6-nodejs10:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
     jobs:
       - build-publish:
           distro: "alpine"
