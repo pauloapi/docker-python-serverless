@@ -75,22 +75,6 @@ workflows:
           filters:
             branches:
               only: master
-  build-python3.8-nodejs15:
-    triggers:
-      - schedule:
-          cron: "0 0 * * *"
-          filters:
-            branches:
-              only:
-                - master
-    jobs:
-      - build-publish:
-          distro: "alpine"
-          python_version: "3.8"
-          node_version: "15"
-          filters:
-            branches:
-              only: master
       - build-publish:
           distro: "slim"
           python_version: "3.8"
