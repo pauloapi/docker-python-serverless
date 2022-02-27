@@ -23,7 +23,7 @@ jobs:
         description: Node Version
         default: "15"
         type: enum
-        enum: ["10", "12", "14", "15"]
+        enum: ["12", "14", "15"]
     steps:
       - checkout
       - setup_remote_docker
@@ -405,117 +405,6 @@ workflows:
           distro: "stretch"
           python_version: "3.6"
           node_version: "12"
-          filters:
-            branches:
-              only: master
-  build-python3.8-nodejs10:
-    triggers:
-      - schedule:
-          cron: "0 0 * * *"
-          filters:
-            branches:
-              only:
-                - master
-    jobs:
-      - build-publish:
-          distro: "alpine"
-          python_version: "3.8"
-          node_version: "10"
-          filters:
-            branches:
-              only: master
-      - build-publish:
-          distro: "slim"
-          python_version: "3.8"
-          node_version: "10"
-          filters:
-            branches:
-              only: master
-      - build-publish:
-          distro: "buster"
-          python_version: "3.8"
-          node_version: "10"
-          filters:
-            branches:
-              only: master
-      # - build-publish:
-      #     distro: "stretch"
-      #     python_version: "3.8"
-      #     node_version: "10"
-      #     filters:
-      #       branches:
-      #         only: master
-  build-python3.7-nodejs10:
-    triggers:
-      - schedule:
-          cron: "0 0 * * *"
-          filters:
-            branches:
-              only:
-                - master
-    jobs:
-      - build-publish:
-          distro: "alpine"
-          python_version: "3.7"
-          node_version: "10"
-          filters:
-            branches:
-              only: master
-      - build-publish:
-          distro: "slim"
-          python_version: "3.7"
-          node_version: "10"
-          filters:
-            branches:
-              only: master
-      - build-publish:
-          distro: "buster"
-          python_version: "3.7"
-          node_version: "10"
-          filters:
-            branches:
-              only: master
-      - build-publish:
-          distro: "stretch"
-          python_version: "3.7"
-          node_version: "10"
-          filters:
-            branches:
-              only: master
-  build-python3.6-nodejs10:
-    triggers:
-      - schedule:
-          cron: "0 0 * * *"
-          filters:
-            branches:
-              only:
-                - master
-    jobs:
-      - build-publish:
-          distro: "alpine"
-          python_version: "3.6"
-          node_version: "10"
-          filters:
-            branches:
-              only: master
-      - build-publish:
-          distro: "slim"
-          python_version: "3.6"
-          node_version: "10"
-          filters:
-            branches:
-              only: master
-      - build-publish:
-          distro: "buster"
-          python_version: "3.6"
-          node_version: "10"
-          filters:
-            branches:
-              only: master
-      - build-publish:
-          distro: "stretch"
-          python_version: "3.6"
-          node_version: "10"
           filters:
             branches:
               only: master
