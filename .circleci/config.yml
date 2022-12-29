@@ -18,12 +18,12 @@ jobs:
         description: Supported Lambda Python Version
         default: "3.8"
         type: enum
-        enum: ["3.6", "3.7", "3.8"]
+        enum: ["3.6", "3.7", "3.8", "3.9"]
       node_version:
         description: Node Version
         default: "15"
         type: enum
-        enum: ["12", "14", "15"]
+        enum: ["14", "15", "16", "18", "19", "20"]
     steps:
       - checkout
       - setup_remote_docker
@@ -297,7 +297,7 @@ workflows:
           filters:
             branches:
               only: master
-  build-python3.8-nodejs12:
+  build-python3.8-nodejs16:
     triggers:
       - schedule:
           cron: "0 0 * * *"
@@ -309,32 +309,32 @@ workflows:
       - build-publish:
           distro: "alpine"
           python_version: "3.8"
-          node_version: "12"
+          node_version: "16"
           filters:
             branches:
               only: master
       - build-publish:
           distro: "slim"
           python_version: "3.8"
-          node_version: "12"
+          node_version: "16"
           filters:
             branches:
               only: master
       - build-publish:
           distro: "buster"
           python_version: "3.8"
-          node_version: "12"
+          node_version: "16"
           filters:
             branches:
               only: master
-      # - build-publish:
-      #     distro: "stretch"
-      #     python_version: "3.8"
-      #     node_version: "12"
-      #     filters:
-      #       branches:
-      #         only: master
-  build-python3.7-nodejs12:
+      - build-publish:
+          distro: "stretch"
+          python_version: "3.8"
+          node_version: "16"
+          filters:
+            branches:
+              only: master
+  build-python3.7-nodejs16:
     triggers:
       - schedule:
           cron: "0 0 * * *"
@@ -346,32 +346,32 @@ workflows:
       - build-publish:
           distro: "alpine"
           python_version: "3.7"
-          node_version: "12"
+          node_version: "16"
           filters:
             branches:
               only: master
       - build-publish:
           distro: "slim"
           python_version: "3.7"
-          node_version: "12"
+          node_version: "16"
           filters:
             branches:
               only: master
       - build-publish:
           distro: "buster"
           python_version: "3.7"
-          node_version: "12"
+          node_version: "16"
           filters:
             branches:
               only: master
       - build-publish:
           distro: "stretch"
           python_version: "3.7"
-          node_version: "12"
+          node_version: "16"
           filters:
             branches:
               only: master
-  build-python3.6-nodejs12:
+  build-python3.6-nodejs16:
     triggers:
       - schedule:
           cron: "0 0 * * *"
@@ -383,28 +383,140 @@ workflows:
       - build-publish:
           distro: "alpine"
           python_version: "3.6"
-          node_version: "12"
+          node_version: "16"
           filters:
             branches:
               only: master
       - build-publish:
           distro: "slim"
           python_version: "3.6"
-          node_version: "12"
+          node_version: "16"
           filters:
             branches:
               only: master
       - build-publish:
           distro: "buster"
           python_version: "3.6"
-          node_version: "12"
+          node_version: "16"
           filters:
             branches:
               only: master
       - build-publish:
           distro: "stretch"
           python_version: "3.6"
-          node_version: "12"
+          node_version: "16"
+          filters:
+            branches:
+              only: master
+
+  build-python3.8-nodejs18:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - build-publish:
+          distro: "alpine"
+          python_version: "3.8"
+          node_version: "18"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "slim"
+          python_version: "3.8"
+          node_version: "18"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "buster"
+          python_version: "3.8"
+          node_version: "18"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "stretch"
+          python_version: "3.8"
+          node_version: "18"
+          filters:
+            branches:
+              only: master
+  build-python3.7-nodejs18:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - build-publish:
+          distro: "alpine"
+          python_version: "3.7"
+          node_version: "18"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "slim"
+          python_version: "3.7"
+          node_version: "18"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "buster"
+          python_version: "3.7"
+          node_version: "18"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "stretch"
+          python_version: "3.7"
+          node_version: "18"
+          filters:
+            branches:
+              only: master
+  build-python3.6-nodejs18:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - build-publish:
+          distro: "alpine"
+          python_version: "3.6"
+          node_version: "18"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "slim"
+          python_version: "3.6"
+          node_version: "18"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "buster"
+          python_version: "3.6"
+          node_version: "18"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "stretch"
+          python_version: "3.6"
+          node_version: "18"
           filters:
             branches:
               only: master
