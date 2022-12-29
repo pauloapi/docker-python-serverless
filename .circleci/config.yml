@@ -13,7 +13,7 @@ jobs:
         default: "alpine"
         description: Docker image distro
         type: enum
-        enum: ["alpine", "slim", "buster", "stretch"]
+        enum: ["alpine", "slim", "buster", "bullseye"]
       python_version:
         description: Supported Lambda Python Version
         default: "3.8"
@@ -99,7 +99,7 @@ workflows:
             branches:
               only: develop
       - build-publish:
-          distro: "stretch"
+          distro: "bullseye"
           python_version: "3.9"
           node_version: "18"
           filters:
@@ -127,7 +127,7 @@ workflows:
             branches:
               only: develop
       - build-publish:
-          distro: "stretch"
+          distro: "bullseye"
           python_version: "3.8"
           node_version: "18"
           filters:
@@ -164,7 +164,7 @@ workflows:
             branches:
               only: master
       - build-publish:
-          distro: "stretch"
+          distro: "bullseye"
           python_version: "3.8"
           node_version: "15"
           filters:
@@ -201,7 +201,7 @@ workflows:
             branches:
               only: master
       - build-publish:
-          distro: "stretch"
+          distro: "bullseye"
           python_version: "3.7"
           node_version: "15"
           filters:
@@ -238,7 +238,7 @@ workflows:
             branches:
               only: master
       - build-publish:
-          distro: "stretch"
+          distro: "bullseye"
           python_version: "3.6"
           node_version: "15"
           filters:
@@ -275,7 +275,7 @@ workflows:
             branches:
               only: master
       - build-publish:
-          distro: "stretch"
+          distro: "bullseye"
           python_version: "3.8"
           node_version: "14"
           filters:
@@ -312,7 +312,7 @@ workflows:
             branches:
               only: master
       - build-publish:
-          distro: "stretch"
+          distro: "bullseye"
           python_version: "3.7"
           node_version: "14"
           filters:
@@ -349,7 +349,7 @@ workflows:
             branches:
               only: master
       - build-publish:
-          distro: "stretch"
+          distro: "bullseye"
           python_version: "3.6"
           node_version: "14"
           filters:
@@ -386,7 +386,7 @@ workflows:
             branches:
               only: master
       - build-publish:
-          distro: "stretch"
+          distro: "bullseye"
           python_version: "3.8"
           node_version: "16"
           filters:
@@ -423,7 +423,7 @@ workflows:
             branches:
               only: master
       - build-publish:
-          distro: "stretch"
+          distro: "bullseye"
           python_version: "3.7"
           node_version: "16"
           filters:
@@ -460,7 +460,7 @@ workflows:
             branches:
               only: master
       - build-publish:
-          distro: "stretch"
+          distro: "bullseye"
           python_version: "3.6"
           node_version: "16"
           filters:
@@ -497,7 +497,7 @@ workflows:
             branches:
               only: master
       - build-publish:
-          distro: "stretch"
+          distro: "bullseye"
           python_version: "3.8"
           node_version: "18"
           filters:
@@ -534,7 +534,7 @@ workflows:
             branches:
               only: master
       - build-publish:
-          distro: "stretch"
+          distro: "bullseye"
           python_version: "3.7"
           node_version: "18"
           filters:
@@ -571,7 +571,7 @@ workflows:
             branches:
               only: master
       - build-publish:
-          distro: "stretch"
+          distro: "bullseye"
           python_version: "3.6"
           node_version: "18"
           filters:
@@ -608,7 +608,7 @@ workflows:
             branches:
               only: master
       - build-publish:
-          distro: "stretch"
+          distro: "bullseye"
           python_version: "3.8"
           node_version: "19"
           filters:
@@ -645,7 +645,7 @@ workflows:
             branches:
               only: master
       - build-publish:
-          distro: "stretch"
+          distro: "bullseye"
           python_version: "3.7"
           node_version: "19"
           filters:
@@ -682,7 +682,7 @@ workflows:
             branches:
               only: master
       - build-publish:
-          distro: "stretch"
+          distro: "bullseye"
           python_version: "3.6"
           node_version: "19"
           filters:
@@ -719,7 +719,7 @@ workflows:
             branches:
               only: master
       - build-publish:
-          distro: "stretch"
+          distro: "bullseye"
           python_version: "3.8"
           node_version: "20"
           filters:
@@ -756,7 +756,7 @@ workflows:
             branches:
               only: master
       - build-publish:
-          distro: "stretch"
+          distro: "bullseye"
           python_version: "3.7"
           node_version: "20"
           filters:
@@ -793,7 +793,7 @@ workflows:
             branches:
               only: master
       - build-publish:
-          distro: "stretch"
+          distro: "bullseye"
           python_version: "3.6"
           node_version: "20"
           filters:
@@ -830,7 +830,7 @@ workflows:
             branches:
               only: master
       - build-publish:
-          distro: "stretch"
+          distro: "bullseye"
           python_version: "3.9"
           node_version: "15"
           filters:
@@ -867,7 +867,7 @@ workflows:
             branches:
               only: master
       - build-publish:
-          distro: "stretch"
+          distro: "bullseye"
           python_version: "3.9"
           node_version: "14"
           filters:
@@ -904,7 +904,7 @@ workflows:
             branches:
               only: master
       - build-publish:
-          distro: "stretch"
+          distro: "bullseye"
           python_version: "3.9"
           node_version: "16"
           filters:
@@ -941,7 +941,7 @@ workflows:
             branches:
               only: master
       - build-publish:
-          distro: "stretch"
+          distro: "bullseye"
           python_version: "3.9"
           node_version: "18"
           filters:
@@ -978,7 +978,7 @@ workflows:
             branches:
               only: master
       - build-publish:
-          distro: "stretch"
+          distro: "bullseye"
           python_version: "3.9"
           node_version: "19"
           filters:
@@ -1015,7 +1015,7 @@ workflows:
             branches:
               only: master
       - build-publish:
-          distro: "stretch"
+          distro: "bullseye"
           python_version: "3.9"
           node_version: "20"
           filters:
