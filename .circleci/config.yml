@@ -27,6 +27,8 @@ jobs:
           - "3.7"
           - "3.8"
           - "3.9"
+          - "3.10"
+          - "3.11"
       node_version:
         description: Node Version
         default: "18"
@@ -36,7 +38,6 @@ jobs:
           - "16"
           - "18"
           - "19"
-          - "20"
     steps:
       - checkout
       - setup_remote_docker
@@ -86,7 +87,6 @@ jobs:
               docker tag $IMAGE_NAME:python<< parameters.python_version >>-nodejs<< parameters.node_version >>-<< parameters.distro >> $IMAGE_NAME:latest
               docker push $IMAGE_NAME:latest
             fi
-            
 workflows:
   version: 2
   build-latest-on-commit:
@@ -98,64 +98,6 @@ workflows:
           filters:
             branches:
               only: master
-  build-develop-on-commit:
-    jobs:
-      - build-publish:
-          distro: "alpine"
-          python_version: "3.9"
-          node_version: "19"
-          filters:
-            branches:
-              only: develop
-      - build-publish:
-          distro: "slim"
-          python_version: "3.9"
-          node_version: "19"
-          filters:
-            branches:
-              only: develop
-      - build-publish:
-          distro: "buster"
-          python_version: "3.9"
-          node_version: "19"
-          filters:
-            branches:
-              only: develop
-      - build-publish:
-          distro: "bullseye"
-          python_version: "3.9"
-          node_version: "19"
-          filters:
-            branches:
-              only: develop
-      - build-publish:
-          distro: "alpine"
-          python_version: "3.8"
-          node_version: "20"
-          filters:
-            branches:
-              only: develop
-      - build-publish:
-          distro: "slim"
-          python_version: "3.8"
-          node_version: "20"
-          filters:
-            branches:
-              only: develop
-      - build-publish:
-          distro: "buster"
-          python_version: "3.8"
-          node_version: "20"
-          filters:
-            branches:
-              only: develop
-      - build-publish:
-          distro: "bullseye"
-          python_version: "3.8"
-          node_version: "20"
-          filters:
-            branches:
-              only: develop
   build-python3.6-nodejs14:
     triggers:
       - schedule:
@@ -301,43 +243,6 @@ workflows:
           distro: bullseye
           python_version: "3.6"
           node_version: "19"
-          filters:
-            branches:
-              only: master
-  build-python3.6-nodejs20:
-    triggers:
-      - schedule:
-          cron: 0 0 * * *
-          filters:
-            branches:
-              only:
-                - master
-    jobs:
-      - build-publish:
-          distro: alpine
-          python_version: "3.6"
-          node_version: "20"
-          filters:
-            branches:
-              only: master
-      - build-publish:
-          distro: slim
-          python_version: "3.6"
-          node_version: "20"
-          filters:
-            branches:
-              only: master
-      - build-publish:
-          distro: buster
-          python_version: "3.6"
-          node_version: "20"
-          filters:
-            branches:
-              only: master
-      - build-publish:
-          distro: bullseye
-          python_version: "3.6"
-          node_version: "20"
           filters:
             branches:
               only: master
@@ -489,43 +394,6 @@ workflows:
           filters:
             branches:
               only: master
-  build-python3.7-nodejs20:
-    triggers:
-      - schedule:
-          cron: 0 0 * * *
-          filters:
-            branches:
-              only:
-                - master
-    jobs:
-      - build-publish:
-          distro: alpine
-          python_version: "3.7"
-          node_version: "20"
-          filters:
-            branches:
-              only: master
-      - build-publish:
-          distro: slim
-          python_version: "3.7"
-          node_version: "20"
-          filters:
-            branches:
-              only: master
-      - build-publish:
-          distro: buster
-          python_version: "3.7"
-          node_version: "20"
-          filters:
-            branches:
-              only: master
-      - build-publish:
-          distro: bullseye
-          python_version: "3.7"
-          node_version: "20"
-          filters:
-            branches:
-              only: master
   build-python3.8-nodejs14:
     triggers:
       - schedule:
@@ -671,43 +539,6 @@ workflows:
           distro: bullseye
           python_version: "3.8"
           node_version: "19"
-          filters:
-            branches:
-              only: master
-  build-python3.8-nodejs20:
-    triggers:
-      - schedule:
-          cron: 0 0 * * *
-          filters:
-            branches:
-              only:
-                - master
-    jobs:
-      - build-publish:
-          distro: alpine
-          python_version: "3.8"
-          node_version: "20"
-          filters:
-            branches:
-              only: master
-      - build-publish:
-          distro: slim
-          python_version: "3.8"
-          node_version: "20"
-          filters:
-            branches:
-              only: master
-      - build-publish:
-          distro: buster
-          python_version: "3.8"
-          node_version: "20"
-          filters:
-            branches:
-              only: master
-      - build-publish:
-          distro: bullseye
-          python_version: "3.8"
-          node_version: "20"
           filters:
             branches:
               only: master
@@ -859,7 +690,7 @@ workflows:
           filters:
             branches:
               only: master
-  build-python3.9-nodejs20:
+  build-python3.10-nodejs14:
     triggers:
       - schedule:
           cron: 0 0 * * *
@@ -870,29 +701,288 @@ workflows:
     jobs:
       - build-publish:
           distro: alpine
-          python_version: "3.9"
-          node_version: "20"
+          python_version: "3.10"
+          node_version: "14"
           filters:
             branches:
               only: master
       - build-publish:
           distro: slim
-          python_version: "3.9"
-          node_version: "20"
+          python_version: "3.10"
+          node_version: "14"
           filters:
             branches:
               only: master
       - build-publish:
           distro: buster
-          python_version: "3.9"
-          node_version: "20"
+          python_version: "3.10"
+          node_version: "14"
           filters:
             branches:
               only: master
       - build-publish:
           distro: bullseye
-          python_version: "3.9"
-          node_version: "20"
+          python_version: "3.10"
+          node_version: "14"
+          filters:
+            branches:
+              only: master
+  build-python3.10-nodejs16:
+    triggers:
+      - schedule:
+          cron: 0 0 * * *
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - build-publish:
+          distro: alpine
+          python_version: "3.10"
+          node_version: "16"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: slim
+          python_version: "3.10"
+          node_version: "16"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: buster
+          python_version: "3.10"
+          node_version: "16"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: bullseye
+          python_version: "3.10"
+          node_version: "16"
+          filters:
+            branches:
+              only: master
+  build-python3.10-nodejs18:
+    triggers:
+      - schedule:
+          cron: 0 0 * * *
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - build-publish:
+          distro: alpine
+          python_version: "3.10"
+          node_version: "18"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: slim
+          python_version: "3.10"
+          node_version: "18"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: buster
+          python_version: "3.10"
+          node_version: "18"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: bullseye
+          python_version: "3.10"
+          node_version: "18"
+          filters:
+            branches:
+              only: master
+  build-python3.10-nodejs19:
+    triggers:
+      - schedule:
+          cron: 0 0 * * *
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - build-publish:
+          distro: alpine
+          python_version: "3.10"
+          node_version: "19"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: slim
+          python_version: "3.10"
+          node_version: "19"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: buster
+          python_version: "3.10"
+          node_version: "19"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: bullseye
+          python_version: "3.10"
+          node_version: "19"
+          filters:
+            branches:
+              only: master
+  build-python3.11-nodejs14:
+    triggers:
+      - schedule:
+          cron: 0 0 * * *
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - build-publish:
+          distro: alpine
+          python_version: "3.11"
+          node_version: "14"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: slim
+          python_version: "3.11"
+          node_version: "14"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: buster
+          python_version: "3.11"
+          node_version: "14"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: bullseye
+          python_version: "3.11"
+          node_version: "14"
+          filters:
+            branches:
+              only: master
+  build-python3.11-nodejs16:
+    triggers:
+      - schedule:
+          cron: 0 0 * * *
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - build-publish:
+          distro: alpine
+          python_version: "3.11"
+          node_version: "16"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: slim
+          python_version: "3.11"
+          node_version: "16"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: buster
+          python_version: "3.11"
+          node_version: "16"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: bullseye
+          python_version: "3.11"
+          node_version: "16"
+          filters:
+            branches:
+              only: master
+  build-python3.11-nodejs18:
+    triggers:
+      - schedule:
+          cron: 0 0 * * *
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - build-publish:
+          distro: alpine
+          python_version: "3.11"
+          node_version: "18"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: slim
+          python_version: "3.11"
+          node_version: "18"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: buster
+          python_version: "3.11"
+          node_version: "18"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: bullseye
+          python_version: "3.11"
+          node_version: "18"
+          filters:
+            branches:
+              only: master
+  build-python3.11-nodejs19:
+    triggers:
+      - schedule:
+          cron: 0 0 * * *
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - build-publish:
+          distro: alpine
+          python_version: "3.11"
+          node_version: "19"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: slim
+          python_version: "3.11"
+          node_version: "19"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: buster
+          python_version: "3.11"
+          node_version: "19"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: bullseye
+          python_version: "3.11"
+          node_version: "19"
           filters:
             branches:
               only: master
