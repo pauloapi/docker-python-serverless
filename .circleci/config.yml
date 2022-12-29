@@ -75,6 +75,64 @@ workflows:
           filters:
             branches:
               only: master
+  build-develop-on-commit:
+    jobs:
+      - build-publish:
+          distro: "alpine"
+          python_version: "3.9"
+          node_version: "18"
+          filters:
+            branches:
+              only: develop
+      - build-publish:
+          distro: "slim"
+          python_version: "3.9"
+          node_version: "18"
+          filters:
+            branches:
+              only: develop
+      - build-publish:
+          distro: "buster"
+          python_version: "3.9"
+          node_version: "18"
+          filters:
+            branches:
+              only: develop
+      - build-publish:
+          distro: "stretch"
+          python_version: "3.9"
+          node_version: "18"
+          filters:
+            branches:
+              only: develop
+      - build-publish:
+          distro: "alpine"
+          python_version: "3.8"
+          node_version: "18"
+          filters:
+            branches:
+              only: develop
+      - build-publish:
+          distro: "slim"
+          python_version: "3.8"
+          node_version: "18"
+          filters:
+            branches:
+              only: develop
+      - build-publish:
+          distro: "buster"
+          python_version: "3.8"
+          node_version: "18"
+          filters:
+            branches:
+              only: develop
+      - build-publish:
+          distro: "stretch"
+          python_version: "3.8"
+          node_version: "18"
+          filters:
+            branches:
+              only: develop
   build-python3.8-nodejs15:
     triggers:
       - schedule:
@@ -105,13 +163,13 @@ workflows:
           filters:
             branches:
               only: master
-      # - build-publish:
-      #     distro: "stretch"
-      #     python_version: "3.8"
-      #     node_version: "15"
-      #     filters:
-      #       branches:
-      #         only: master
+      - build-publish:
+          distro: "stretch"
+          python_version: "3.8"
+          node_version: "15"
+          filters:
+            branches:
+              only: master
   build-python3.7-nodejs15:
     triggers:
       - schedule:
@@ -216,13 +274,13 @@ workflows:
           filters:
             branches:
               only: master
-      # - build-publish:
-      #     distro: "stretch"
-      #     python_version: "3.8"
-      #     node_version: "14"
-      #     filters:
-      #       branches:
-      #         only: master
+      - build-publish:
+          distro: "stretch"
+          python_version: "3.8"
+          node_version: "14"
+          filters:
+            branches:
+              only: master
   build-python3.7-nodejs14:
     triggers:
       - schedule:
@@ -408,7 +466,6 @@ workflows:
           filters:
             branches:
               only: master
-
   build-python3.8-nodejs18:
     triggers:
       - schedule:
@@ -517,6 +574,450 @@ workflows:
           distro: "stretch"
           python_version: "3.6"
           node_version: "18"
+          filters:
+            branches:
+              only: master
+  build-python3.8-nodejs19:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - build-publish:
+          distro: "alpine"
+          python_version: "3.8"
+          node_version: "19"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "slim"
+          python_version: "3.8"
+          node_version: "19"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "buster"
+          python_version: "3.8"
+          node_version: "19"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "stretch"
+          python_version: "3.8"
+          node_version: "19"
+          filters:
+            branches:
+              only: master
+  build-python3.7-nodejs19:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - build-publish:
+          distro: "alpine"
+          python_version: "3.7"
+          node_version: "19"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "slim"
+          python_version: "3.7"
+          node_version: "19"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "buster"
+          python_version: "3.7"
+          node_version: "19"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "stretch"
+          python_version: "3.7"
+          node_version: "19"
+          filters:
+            branches:
+              only: master
+  build-python3.6-nodejs19:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - build-publish:
+          distro: "alpine"
+          python_version: "3.6"
+          node_version: "19"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "slim"
+          python_version: "3.6"
+          node_version: "19"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "buster"
+          python_version: "3.6"
+          node_version: "19"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "stretch"
+          python_version: "3.6"
+          node_version: "19"
+          filters:
+            branches:
+              only: master
+  build-python3.8-nodejs20:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - build-publish:
+          distro: "alpine"
+          python_version: "3.8"
+          node_version: "20"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "slim"
+          python_version: "3.8"
+          node_version: "20"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "buster"
+          python_version: "3.8"
+          node_version: "20"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "stretch"
+          python_version: "3.8"
+          node_version: "20"
+          filters:
+            branches:
+              only: master
+  build-python3.7-nodejs20:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - build-publish:
+          distro: "alpine"
+          python_version: "3.7"
+          node_version: "20"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "slim"
+          python_version: "3.7"
+          node_version: "20"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "buster"
+          python_version: "3.7"
+          node_version: "20"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "stretch"
+          python_version: "3.7"
+          node_version: "20"
+          filters:
+            branches:
+              only: master
+  build-python3.6-nodejs20:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - build-publish:
+          distro: "alpine"
+          python_version: "3.6"
+          node_version: "20"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "slim"
+          python_version: "3.6"
+          node_version: "20"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "buster"
+          python_version: "3.6"
+          node_version: "20"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "stretch"
+          python_version: "3.6"
+          node_version: "20"
+          filters:
+            branches:
+              only: master
+  build-python3.9-nodejs15:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - build-publish:
+          distro: "alpine"
+          python_version: "3.9"
+          node_version: "15"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "slim"
+          python_version: "3.9"
+          node_version: "15"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "buster"
+          python_version: "3.9"
+          node_version: "15"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "stretch"
+          python_version: "3.9"
+          node_version: "15"
+          filters:
+            branches:
+              only: master
+  build-python3.9-nodejs14:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - build-publish:
+          distro: "alpine"
+          python_version: "3.9"
+          node_version: "14"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "slim"
+          python_version: "3.9"
+          node_version: "14"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "buster"
+          python_version: "3.9"
+          node_version: "14"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "stretch"
+          python_version: "3.9"
+          node_version: "14"
+          filters:
+            branches:
+              only: master
+  build-python3.9-nodejs16:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - build-publish:
+          distro: "alpine"
+          python_version: "3.9"
+          node_version: "16"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "slim"
+          python_version: "3.9"
+          node_version: "16"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "buster"
+          python_version: "3.9"
+          node_version: "16"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "stretch"
+          python_version: "3.9"
+          node_version: "16"
+          filters:
+            branches:
+              only: master
+  build-python3.9-nodejs18:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - build-publish:
+          distro: "alpine"
+          python_version: "3.9"
+          node_version: "18"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "slim"
+          python_version: "3.9"
+          node_version: "18"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "buster"
+          python_version: "3.9"
+          node_version: "18"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "stretch"
+          python_version: "3.9"
+          node_version: "18"
+          filters:
+            branches:
+              only: master
+  build-python3.9-nodejs19:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - build-publish:
+          distro: "alpine"
+          python_version: "3.9"
+          node_version: "19"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "slim"
+          python_version: "3.9"
+          node_version: "19"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "buster"
+          python_version: "3.9"
+          node_version: "19"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "stretch"
+          python_version: "3.9"
+          node_version: "19"
+          filters:
+            branches:
+              only: master
+  build-python3.9-nodejs20:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - build-publish:
+          distro: "alpine"
+          python_version: "3.9"
+          node_version: "20"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "slim"
+          python_version: "3.9"
+          node_version: "20"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "buster"
+          python_version: "3.9"
+          node_version: "20"
+          filters:
+            branches:
+              only: master
+      - build-publish:
+          distro: "stretch"
+          python_version: "3.9"
+          node_version: "20"
           filters:
             branches:
               only: master
