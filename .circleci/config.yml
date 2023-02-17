@@ -97,7 +97,7 @@ workflows:
           filters:
             branches:
               only: master
-build-python3.7-nodejs14:
+  build-python3.7-nodejs14:
     triggers:
       - schedule:
           cron: 0 0 * * *
