@@ -1,5 +1,5 @@
 [![Pulls](https://img.shields.io/docker/pulls/thenecromancerx/docker-python-serverless.svg?style=flat-square)](https://hub.docker.com/r/thenecromancerx/docker-python-serverless)
-[![CircleCI](https://img.shields.io/circleci/project/github/Necromancerx/docker-python-serverless.svg?style=flat-square)](https://circleci.com/gh/Necromancerx/docker-python-serverless)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/pauloapi/docker-python-serverless/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/pauloapi/docker-python-serverless/tree/master)
 ![GitHub](https://img.shields.io/github/license/Necromancerx/docker-python-serverless?style=flat-square)
 
 ## Node, Python w/ Serverless
